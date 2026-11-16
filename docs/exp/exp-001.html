@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline 小型 CNN｜研究進度追蹤</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">研究進度追蹤</a>
+    <nav><a href="../index.html">首頁</a> <a href="../timeline.html">時間線</a> <a href="../experiments.html" aria-current="page">實驗表</a> <a href="../todo.html">待辦</a></nav>
+  </div>
+</header>
+<main class="wrap">
+<h1>Baseline 小型 CNN</h1>
+<p><span class="status status-done">完成</span> <span class="muted">exp-001 · 2026-11-11</span></p><h2>假設</h2>
+<p>小型 CNN 不加任何技巧，可以作為後續實驗的比較基準。</p>
+<h2>設定</h2>
+<ul><li>模型：4 層卷積 + 全連接層</li><li>學習率 0.001，batch size 32，訓練 30 個 epoch</li><li>輸入解析度 128x128</li></ul>
+<h2>結果</h2>
+<ul><li>驗證準確率 78.4%（虛構數字）</li><li>更正（2026-11-13）：驗證集切分有資料洩漏，修正後為 75.9%（使用者口述）</li></ul>
+<h2>結論與下一步</h2>
+<ul><li>第 15 個 epoch 後過擬合，下一步嘗試資料增強 <a href="../exp/exp-002.html">exp-002</a></li></ul>
+</main>
+<footer class="wrap site-footer">
+  <p>本站資料為虛構範例。由 <code>scripts/build.py</code> 依照 CLAUDE.md 規則產生。</p>
+</footer>
+<script src="../assets/filter.js"></script>
+</body>
+</html>

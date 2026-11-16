@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>實驗表｜研究進度追蹤</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">研究進度追蹤</a>
+    <nav><a href="index.html">首頁</a> <a href="timeline.html">時間線</a> <a href="experiments.html" aria-current="page">實驗表</a> <a href="todo.html">待辦</a></nav>
+  </div>
+</header>
+<main class="wrap">
+<h1>實驗表</h1>
+<div class="filters" hidden><button type="button" data-filter="all" aria-pressed="true">全部</button><button type="button" data-filter="planned" aria-pressed="false">規劃中</button><button type="button" data-filter="running" aria-pressed="false">進行中</button><button type="button" data-filter="done" aria-pressed="false">完成</button><button type="button" data-filter="failed" aria-pressed="false">失敗</button></div><table><thead><tr><th>編號</th><th>標題</th><th>狀態</th><th>日期</th></tr></thead><tbody><tr data-status="done"><td><a href="exp/exp-001.html">exp-001</a></td><td>Baseline 小型 CNN</td><td><span class="status status-done">完成</span></td><td>2026-11-11</td></tr><tr data-status="failed"><td><a href="exp/exp-002.html">exp-002</a></td><td>強資料增強</td><td><span class="status status-failed">失敗</span></td><td>2026-11-12</td></tr><tr data-status="running"><td><a href="exp/exp-003.html">exp-003</a></td><td>Cosine 學習率排程</td><td><span class="status status-running">進行中</span></td><td>2026-11-14</td></tr><tr data-status="planned"><td><a href="exp/exp-004.html">exp-004</a></td><td>輸入解析度比較</td><td><span class="status status-planned">規劃中</span></td><td>2026-11-14</td></tr><tr data-status="planned"><td><a href="exp/exp-005.html">exp-005</a></td><td>變量 A 的實驗組與對照組比較</td><td><span class="status status-planned">規劃中</span></td><td>2026-11-16</td></tr></tbody></table>
+</main>
+<footer class="wrap site-footer">
+  <p>本站資料為虛構範例。由 <code>scripts/build.py</code> 依照 CLAUDE.md 規則產生。</p>
+</footer>
+<script src="assets/filter.js"></script>
+</body>
+</html>

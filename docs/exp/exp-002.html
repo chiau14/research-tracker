@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>強資料增強｜研究進度追蹤</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">研究進度追蹤</a>
+    <nav><a href="../index.html">首頁</a> <a href="../timeline.html">時間線</a> <a href="../experiments.html" aria-current="page">實驗表</a> <a href="../todo.html">待辦</a></nav>
+  </div>
+</header>
+<main class="wrap">
+<h1>強資料增強</h1>
+<p><span class="status status-failed">失敗</span> <span class="muted">exp-002 · 2026-11-12</span></p><h2>假設</h2>
+<p>加入隨機裁切、旋轉、色彩抖動，可以減少 <a href="../exp/exp-001.html">exp-001</a> 的過擬合。</p>
+<h2>設定</h2>
+<ul><li>沿用 exp-001 的設定</li><li>隨機裁切比例 0.3–1.0，旋轉 ±45 度，色彩抖動 0.4</li></ul>
+<h2>結果</h2>
+<ul><li>驗證準確率 71.2%（虛構數字），比 baseline 更差</li></ul>
+<h2>結論與下一步</h2>
+<ul><li>裁切範圍太大，病斑被裁掉。暫時放棄強增強，改從學習率著手 <a href="../exp/exp-003.html">exp-003</a></li></ul>
+</main>
+<footer class="wrap site-footer">
+  <p>本站資料為虛構範例。由 <code>scripts/build.py</code> 依照 CLAUDE.md 規則產生。</p>
+</footer>
+<script src="../assets/filter.js"></script>
+</body>
+</html>

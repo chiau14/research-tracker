@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>時間線｜研究進度追蹤</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">研究進度追蹤</a>
+    <nav><a href="index.html">首頁</a> <a href="timeline.html" aria-current="page">時間線</a> <a href="experiments.html">實驗表</a> <a href="todo.html">待辦</a></nav>
+  </div>
+</header>
+<main class="wrap">
+<h1>時間線</h1>
+<p class="muted">共 5 份日誌，新到舊排列。</p>
+<article class="card" id="2026-11-14"><h2>2026-11-14</h2><p class="tags"><span>訓練</span></p><h3>今天完成</h3>
+<ul><li>啟動 exp-003（cosine 學習率排程） <a href="exp/exp-003.html">exp-003</a></li></ul>
+<h3>結果與觀察</h3>
+<ul><li>尚未驗證，訓練進行中</li></ul>
+<h3>遇到的問題</h3>
+<ul><li>訓練時間比預期長，一個 epoch 約為 baseline 的 1.2 倍</li></ul>
+<h3>明天接續</h3>
+<ul><li>觀察 exp-003 訓練曲線</li><li>整理錯誤分類的樣本</li></ul></article>
+<article class="card" id="2026-11-13"><h2>2026-11-13</h2><p class="tags"><span>除錯</span></p><h3>今天完成</h3>
+<ul><li>修正驗證集切分的 bug：同一株植物的照片同時出現在訓練與驗證集</li></ul>
+<h3>結果與觀察</h3>
+<ul><li>修正後重跑 baseline，驗證準確率變為 75.9%（虛構數字，使用者口述）</li><li>之前的數字偏高，是資料洩漏造成的</li></ul>
+<h3>遇到的問題</h3>
+<p>無</p>
+<h3>明天接續</h3>
+<ul><li>開始 exp-003：加入學習率排程</li></ul></article>
+<article class="card" id="2026-11-12"><h2>2026-11-12</h2><p class="tags"><span>訓練</span><span>資料增強</span></p><h3>今天完成</h3>
+<ul><li>測試強資料增強 <a href="exp/exp-002.html">exp-002</a></li></ul>
+<h3>結果與觀察</h3>
+<ul><li>驗證準確率掉到 71.2%（虛構數字，來源：exp-002）</li><li>增強太強，部分病斑被裁掉，標籤變得不正確</li></ul>
+<h3>遇到的問題</h3>
+<ul><li>隨機裁切範圍太大</li></ul>
+<h3>明天接續</h3>
+<ul><li>先檢查驗證集切分是否正確，再決定下一步</li></ul></article>
+<article class="card" id="2026-11-11"><h2>2026-11-11</h2><p class="tags"><span>訓練</span></p><h3>今天完成</h3>
+<ul><li>完成 baseline 訓練 <a href="exp/exp-001.html">exp-001</a></li></ul>
+<h3>結果與觀察</h3>
+<ul><li>驗證準確率 <strong>78.4%</strong>（虛構數字，來源：exp-001）</li><li>訓練約第 15 個 epoch 後開始過擬合</li></ul>
+<h3>遇到的問題</h3>
+<ul><li>訓練準確率遠高於驗證準確率</li></ul>
+<h3>明天接續</h3>
+<ul><li>試試資料增強能不能減少過擬合</li></ul></article>
+<article class="card" id="2026-11-10"><h2>2026-11-10</h2><p class="tags"><span>環境建置</span></p><h3>今天完成</h3>
+<ul><li>建立專案目錄與資料讀取程式</li><li>確認範例資料集共 5 個類別</li></ul>
+<h3>結果與觀察</h3>
+<ul><li>類別數量不平衡，最少的類別只有最多類別的三分之一</li></ul>
+<h3>遇到的問題</h3>
+<p>無</p>
+<h3>明天接續</h3>
+<ul><li>跑第一個 baseline <a href="exp/exp-001.html">exp-001</a></li></ul></article>
+</main>
+<footer class="wrap site-footer">
+  <p>本站資料為虛構範例。由 <code>scripts/build.py</code> 依照 CLAUDE.md 規則產生。</p>
+</footer>
+<script src="assets/filter.js"></script>
+</body>
+</html>
