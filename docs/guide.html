@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>使用說明｜研究進度追蹤</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">研究進度追蹤</a>
+    <nav><a href="index.html">首頁</a> <a href="timeline.html">時間線</a> <a href="experiments.html">實驗表</a> <a href="todo.html">待辦</a> <a href="weekly.html">週報</a> <a href="guide.html" aria-current="page">使用說明</a></nav>
+  </div>
+</header>
+<main class="wrap">
+<h1>使用說明</h1>
+<h2>這個網站怎麼運作</h2>
+<p>1. 你用一句話告訴 AI 今天的狀況。 2. AI 依照 <code>CLAUDE.md</code> 的規則，更新 <code>TODO.md</code>、<code>logs/</code>、<code>experiments/</code> 裡的檔案。 3. AI 執行 <code>python3 scripts/build.py</code>，把檔案轉成這個網站。</p>
+<p>網頁本身只能看、不能編輯；所有內容都存在 Markdown 檔裡。用 Claude Code 開啟專案資料夾時，AI 會自動讀取 <code>CLAUDE.md</code>，不需要另外貼上規則。</p>
+<h2>可以直接貼給 AI 的指令</h2>
+<p>把下面的句子複製給 AI，括號裡換成你自己的內容。</p>
+<h3>每天開工</h3>
+<pre><code>開始今天</code></pre>
+<p>AI 會回報上次做到哪、卡住的事、未完成的待辦，並建議最多 3 件今天可做的事。你確認後才會寫入。</p>
+<h3>每天收工</h3>
+<pre><code>今天做了：（做了什麼）。結果是（數字或觀察）。</code></pre>
+<p>例如：</p>
+<pre><code>今天做了：exp-003 跑完了，驗證準確率 80%，第 25 個 epoch 才開始過擬合。</code></pre>
+<p>AI 會勾選待辦、寫當天日誌、更新實驗狀態，並重建網頁。</p>
+<h3>新增待辦</h3>
+<pre><code>幫我加一個待辦：（事項）</code></pre>
+<pre><code>幫我加一個待辦：（事項），現在就做</code></pre>
+<p>第一句放進「待做」，第二句放進「進行中」。</p>
+<h3>規劃新實驗</h3>
+<pre><code>新增一個實驗：（想驗證什麼）。設定是（怎麼做）。</code></pre>
+<p>例如：</p>
+<pre><code>新增一個實驗：比較有無變量 A 的結果。實驗組加入變量 A，對照組不加，各做 3 次取平均。</code></pre>
+<p>AI 會自動取下一個實驗編號，建立狀態為「規劃中」的實驗紀錄，並在待辦加上連結。</p>
+<h3>更新實驗狀態</h3>
+<pre><code>exp-004 開始跑了</code></pre>
+<pre><code>exp-004 失敗了，原因是（原因）</code></pre>
+<h3>更正之前的紀錄</h3>
+<pre><code>更正：exp-001 的準確率應該是（正確數字），原因是（原因）</code></pre>
+<p>AI 不會改掉舊內容，而是在後面追加「更正（日期）」，保留完整歷程。</p>
+<h3>寫週報</h3>
+<pre><code>幫我寫這週的週報</code></pre>
+<p>AI 只會整理這週日誌與實驗中已記錄的內容，不會自己編造。</p>
+<h3>新增一種頁面</h3>
+<pre><code>幫我新增（頁面名稱）頁面，內容是（要放什麼）</code></pre>
+<p>AI 會依照 <code>CLAUDE.md</code> 第 9 節：先更新文件，再修改程式，最後補範例資料並建置。</p>
+<p>如果只是一頁固定內容（例如「關於我」），只要說：</p>
+<pre><code>幫我新增一個說明頁「關於我」，內容是（介紹文字）</code></pre>
+<p>AI 會在 <code>pages/</code> 新增一個檔案，網頁導覽列會自動出現這一頁。</p>
+<h3>上傳到網站</h3>
+<pre><code>上傳到 GitHub</code></pre>
+<p>AI 預設不會自己上傳，要你明確說了才會推送。上傳後約 1～2 分鐘，網站就會更新。</p>
+<h2>AI 會拒絕或先確認的事</h2>
+<ul><li><strong>敏感資訊</strong>：伺服器位址、資料路徑、帳號、密碼等，AI 會先提醒，不會直接寫入。</li><li><strong>刪除紀錄</strong>：失敗的實驗與舊日誌不會被刪除，因為它們也是研究過程的一部分。</li><li><strong>編造結果</strong>：你沒提供數據時，AI 會寫「尚未驗證」，不會自己補數字。</li><li><strong>資訊不足</strong>：AI 會先問你，不會亂猜。</li></ul>
+</main>
+<footer class="wrap site-footer">
+  <p>本站資料為虛構範例。由 <code>scripts/build.py</code> 依照 CLAUDE.md 規則產生。</p>
+</footer>
+<script src="assets/filter.js"></script>
+</body>
+</html>

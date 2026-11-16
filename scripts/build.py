@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""讀取 TODO.md、logs/、experiments/，產生靜態網頁到 docs/。
+"""讀取 TODO.md、logs/、experiments/、weekly/、pages/，產生靜態網頁到 docs/。
 
 規則見 CLAUDE.md。只使用 Python 標準庫。
 用法：python3 scripts/build.py
@@ -21,11 +21,14 @@ NAV = [
     ("timeline.html", "時間線"),
     ("experiments.html", "實驗表"),
     ("todo.html", "待辦"),
+    ("weekly.html", "週報"),
 ]
 
 STATUSES = {"planned": "規劃中", "running": "進行中", "done": "完成", "failed": "失敗"}
 LOG_FIELDS = {"date": True, "tags": False}  # 欄位: 是否必填
 EXP_FIELDS = {"id": True, "title": True, "status": True, "date": True, "commit": False}
+WEEKLY_FIELDS = {"week": True, "summary": True}
+PAGE_FIELDS = {"title": True, "order": True}
 TODO_SECTIONS = ["進行中", "待做", "已完成"]
 
 SENSITIVE = [
@@ -36,6 +39,7 @@ SENSITIVE = [
     (re.compile(r"\.(?:ckpt|pt|pth|safetensors)\b"), "checkpoint 檔"),
 ]
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+WEEK_RE = re.compile(r"^\d{4}-W\d{2}$")
 
 errors = []
 
@@ -118,6 +122,34 @@ def load_experiments():
             error(path, "date 必須是 YYYY-MM-DD")
         exps.append({**meta, "id": path.stem, "body": body})
     return exps
+
+
+def load_weekly():
+    weeks = []
+    for path in sorted((ROOT / "weekly").glob("*.md")):
+        meta, body = parse_front_matter(path, WEEKLY_FIELDS)
+        if not WEEK_RE.match(path.stem):
+            error(path, "檔名必須是 YYYY-Www.md（例如 2026-W46.md）")
+        elif meta.get("week") and meta["week"] != path.stem:
+            error(path, f"week 欄位 {meta['week']} 與檔名不一致")
+        weeks.append({"week": path.stem, "summary": meta.get("summary", ""), "body": body})
+    return sorted(weeks, key=lambda x: x["week"], reverse=True)
+
+
+def load_pages():
+    pages = []
+    taken = {href for href, _ in NAV}
+    for path in sorted((ROOT / "pages").glob("*.md")):
+        meta, body = parse_front_matter(path, PAGE_FIELDS)
+        if not re.match(r"^[a-z0-9-]+$", path.stem):
+            error(path, "檔名只能用小寫英文、數字與 -")
+        elif f"{path.stem}.html" in taken:
+            error(path, f"檔名與既有頁面 {path.stem}.html 重複")
+        if meta.get("order") and not str(meta["order"]).isdigit():
+            error(path, "order 必須是整數")
+        pages.append({"slug": path.stem, "title": meta.get("title", path.stem),
+                      "order": int(meta["order"]) if str(meta.get("order", "")).isdigit() else 0, "body": body})
+    return sorted(pages, key=lambda x: (x["order"], x["slug"]))
 
 
 def load_todo():
@@ -206,6 +238,7 @@ def md_to_html(text, root="", shift=0):
 # ---------- 輸出頁面 ----------
 
 BASE = Template((SCRIPTS / "templates" / "base.html").read_text(encoding="utf-8"))
+WEEKLY = Template((SCRIPTS / "templates" / "weekly.html").read_text(encoding="utf-8"))
 
 
 def write_page(rel, title, content):
@@ -283,6 +316,19 @@ def build_todo(todo):
     write_page("todo.html", "待辦", content)
 
 
+def build_weekly(weeks):
+    parts = [f'<p class="muted">共 {len(weeks)} 份週報，新到舊排列。</p>']
+    for w in weeks:
+        parts.append(WEEKLY.substitute(week=w["week"], summary=html.escape(w["summary"]),
+                                       body=md_to_html(w["body"], shift=1)))
+    write_page("weekly.html", "週報", "\n".join(parts))
+
+
+def build_pages(pages):
+    for pg in pages:
+        write_page(f'{pg["slug"]}.html', pg["title"], md_to_html(pg["body"]))
+
+
 # ---------- 連結檢查 ----------
 
 def check_links():
@@ -297,11 +343,12 @@ def check_links():
 
 
 def main():
-    logs, exps, todo = load_logs(), load_experiments(), load_todo()
+    logs, exps, todo, weeks, pages = load_logs(), load_experiments(), load_todo(), load_weekly(), load_pages()
     if errors:
         print("\n".join(errors))
         print(f"\n建置中止：{len(errors)} 個錯誤。docs/ 未更動。")
         return 1
+    NAV.extend((f'{pg["slug"]}.html', pg["title"]) for pg in pages)
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir()
@@ -311,12 +358,14 @@ def main():
     build_timeline(logs)
     build_experiments(exps)
     build_todo(todo)
+    build_weekly(weeks)
+    build_pages(pages)
     broken = check_links()
     if broken:
         print("\n".join(broken))
         return 1
     pages = len(list(OUT.rglob("*.html")))
-    print(f"建置完成：{pages} 個頁面，{len(logs)} 份日誌，{len(exps)} 個實驗。連結檢查通過。")
+    print(f"建置完成：{pages} 個頁面，{len(logs)} 份日誌，{len(exps)} 個實驗，{len(weeks)} 份週報。連結檢查通過。")
     return 0
 
 

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>週報｜研究進度追蹤</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">研究進度追蹤</a>
+    <nav><a href="index.html">首頁</a> <a href="timeline.html">時間線</a> <a href="experiments.html">實驗表</a> <a href="todo.html">待辦</a> <a href="weekly.html" aria-current="page">週報</a> <a href="guide.html">使用說明</a></nav>
+  </div>
+</header>
+<main class="wrap">
+<h1>週報</h1>
+<p class="muted">共 1 份週報，新到舊排列。</p>
+<article class="card" id="2026-W46">
+<h2>2026-W46</h2>
+<p><strong>完成 baseline、修正資料洩漏，並啟動學習率排程實驗</strong></p>
+<h3>本週完成</h3>
+<ul><li>建立專案目錄與資料讀取程式（2026-11-10 日誌）</li><li>完成 baseline 訓練 <a href="exp/exp-001.html">exp-001</a></li><li>測試強資料增強，結果比 baseline 差，判定失敗 <a href="exp/exp-002.html">exp-002</a></li><li>修正驗證集切分的資料洩漏，重跑 baseline 為 75.9%（虛構數字，2026-11-13 日誌）</li><li>啟動 cosine 學習率排程實驗 <a href="exp/exp-003.html">exp-003</a></li></ul>
+<h3>下週計畫</h3>
+<ul><li>觀察 <a href="exp/exp-003.html">exp-003</a> 的結果</li><li>整理錯誤分類的樣本</li><li>設計 <a href="exp/exp-004.html">exp-004</a>：比較不同輸入解析度</li></ul>
+</article>
+
+</main>
+<footer class="wrap site-footer">
+  <p>本站資料為虛構範例。由 <code>scripts/build.py</code> 依照 CLAUDE.md 規則產生。</p>
+</footer>
+<script src="assets/filter.js"></script>
+</body>
+</html>

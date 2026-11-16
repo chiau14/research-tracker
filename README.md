@@ -10,6 +10,8 @@
 2. 開工時說「開始今天」，AI 會整理進度並建議今天的工作。
 3. 收工時說「今天做了…」，AI 會更新待辦、日誌、實驗紀錄，並重建網頁。
 
+完整的指令範例見網站上的「使用說明」頁，或 [pages/guide.md](pages/guide.md)。
+
 ## 手動建置與預覽
 ```
 python3 scripts/build.py
@@ -24,6 +26,8 @@ python3 -m http.server -d docs 8000
 | `TODO.md` | 待辦清單 |
 | `logs/` | 每日日誌 |
 | `experiments/` | 實驗紀錄 |
+| `weekly/` | 週報 |
+| `pages/` | 說明頁（如使用說明） |
 | `scripts/` | 建置程式、模板、樣式 |
 | `docs/` | 產生出來的網頁（GitHub Pages 來源） |
 
